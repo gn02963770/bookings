@@ -11,7 +11,7 @@ func TestForm_Valid(t *testing.T) {
 	r := httptest.NewRequest("POST", "/whatever", nil)
 	form := New(r.PostForm)
 
-	isValid := form.Vaild()
+	isValid := form.Valid()
 	if !isValid {
 		t.Error("got invaild when should have been valid")
 	}
@@ -23,7 +23,7 @@ func TestForm_Required(t *testing.T) {
 	form := New(r.PostForm)
 
 	form.Required("a", "b", "c")
-	if form.Vaild() {
+	if form.Valid() {
 		t.Error("form shows vaild when required fields missimg")
 	}
 
@@ -37,7 +37,7 @@ func TestForm_Required(t *testing.T) {
 	r.PostForm = postedData
 	form = New(r.PostForm)
 	form.Required("a", "b", "c")
-	if !form.Vaild() {
+	if !form.Valid() {
 		t.Error("shows does not have required fields when it does")
 	}
 
@@ -69,7 +69,7 @@ func TestForm_MinLength(t *testing.T) {
 	form := New(r.PostForm)
 
 	form.MinLength("x", 10)
-	if form.Vaild() {
+	if form.Valid() {
 		t.Error("form shows min length for non-existent field")
 	}
 
@@ -83,7 +83,7 @@ func TestForm_MinLength(t *testing.T) {
 	form = New(postedValues)
 
 	form.MinLength("some_field", 100)
-	if form.Vaild() {
+	if form.Valid() {
 		t.Error("form shows minlength of 100 met when data is shorter")
 	}
 
@@ -92,7 +92,7 @@ func TestForm_MinLength(t *testing.T) {
 	form = New(postedValues)
 
 	form.MinLength("another_field", 1)
-	if !form.Vaild() {
+	if !form.Valid() {
 		t.Error("shows minlength of 1 is not met when it is")
 	}
 	
@@ -107,7 +107,7 @@ func TestForm_IsEmail(t *testing.T) {
 	form := New(postedValues)
 
 	form.IsEmail("x")
-	if form.Vaild() {
+	if form.Valid() {
 		t.Error("form shows vaild email for non-existent field")
 	}
 
@@ -116,7 +116,7 @@ func TestForm_IsEmail(t *testing.T) {
 	form = New(postedValues)
 
 	form.IsEmail("email")
-	if !form.Vaild() {
+	if !form.Valid() {
 		t.Error("got an invaild email when we should not have")
 	}
 
@@ -125,7 +125,7 @@ func TestForm_IsEmail(t *testing.T) {
 	form = New(postedValues)
 
 	form.IsEmail("email")
-	if form.Vaild() {
+	if form.Valid() {
 		t.Error("got vaild for invaild email address")
 	}
 }

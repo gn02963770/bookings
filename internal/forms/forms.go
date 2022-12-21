@@ -15,7 +15,7 @@ type Form struct {
 }
 
 // Vaild returns true if there are no errors, otherwise false
-func (f *Form) Vaild() bool {
+func (f *Form) Valid() bool {
 	return len(f.Errors) == 0
 }
 
